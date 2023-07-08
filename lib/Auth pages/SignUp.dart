@@ -1,6 +1,7 @@
 import 'package:blood_donation/auth.dart';
 import 'package:blood_donation/commons/fieldStyle.dart';
 import 'package:blood_donation/dtbase.dart';
+import 'package:blood_donation/screens/requestPage.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,20 @@ class _SignupPageState extends State<SignupPage> {
   final TextEditingController _controllerName = TextEditingController();
   final TextEditingController _controllerDOB = TextEditingController();
   final TextEditingController _controllerPhNo = TextEditingController();
+  final TextEditingController _controllercity = TextEditingController();
+  final TextEditingController _controllerstate = TextEditingController();
+  late String BloodGroup;
+
+  final List<String> blood_groups = [
+    'A+',
+    'A-',
+    'B+',
+    'B-',
+    'O+',
+    'O-',
+    'AB+',
+    'AB-'
+  ];
   DateTime validDate = DateTime.now().subtract(const Duration(days: 6200));
 
   @override
@@ -78,8 +93,8 @@ class _SignupPageState extends State<SignupPage> {
               ),
               TextFormField(
                 controller: _controllerPhNo,
-                validator: (phno) {
-                  if (phno == null || phno.length != 10) {
+                validator: (phoneNo) {
+                  if (phoneNo == null || phoneNo.length != 10) {
                     return "Phone Number must have 10 digits";
                   }
                   return null;
@@ -100,20 +115,42 @@ class _SignupPageState extends State<SignupPage> {
                 firstDate: DateTime(1950),
                 lastDate: validDate,
               ),
+              const SizedBox(
+                height: 15,
+              ),
+              DropdownButtonFormField(
+                items: blood_groups.map((bg) {
+                  return DropdownMenuItem(value: bg, child: Text(bg));
+                }).toList(),
+                decoration:
+                    TextFormFieldStyle.copyWith(labelText: "Blood Group"),
+                onChanged: (UserBG) {
+                  setState(() {
+                    BloodGroup=UserBG!;
+                  });
+                },
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              TextFormField(
+                controller: _controllercity,
+              ),
+              const SizedBox(
+                height: 15,
+              ),
               ElevatedButton(
                   onPressed: () async {
                     if (_formkey.currentState!.validate()) {
-                      await Auth()
-                          .createUserwithEmailandPassword(
-                              email: _controllerEmail.text,
-                              password: _controllerPassword.text);
+                      await Auth().createUserwithEmailandPassword(
+                          email: _controllerEmail.text,
+                          password: _controllerPassword.text);
                       var value = Auth().currentUser!.uid;
-                          await dbms()
-                              .createUser(
-                                  documentID: value,
-                                  name: _controllerName.text.trim(),
-                                  phoneNo: _controllerPhNo.text.trim(),
-                                  dateOfBirth: _controllerDOB.text.trim());
+                      await dbms().createUser(
+                          documentID: value,
+                          name: _controllerName.text.trim(),
+                          phoneNo: _controllerPhNo.text.trim(),
+                          dateOfBirth: _controllerDOB.text.trim());
                     }
                   },
                   child: const Text("Sign Up")),

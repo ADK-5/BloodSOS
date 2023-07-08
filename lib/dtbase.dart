@@ -19,11 +19,20 @@ class dbms {
     };
     try {
       await docUser.set(json).whenComplete(() {
-        return SnackBar(content: Text("Created user in db"));
+        return const SnackBar(content: Text("Created user in db"));
       });
     } catch (e) {
-      return SnackBar(content: Text("error"));
+      return const SnackBar(content: Text("error"));
     }
-    ;
+  }
+
+  Future createRequest({
+    required String req_blood_group,
+    required int req_units,
+    required String state,
+    required String city,
+}) {
+    // TODO: implement createRequest
+    throw UnimplementedError();
   }
 }

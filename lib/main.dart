@@ -1,6 +1,8 @@
 import 'package:blood_donation/Auth%20pages/WidgetTree.dart';
+import 'package:blood_donation/providers/requstCountProviders.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:provider/provider.dart';
 
 Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized(  );
@@ -13,9 +15,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(),
-      home: const WidgetTree(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_)=>Counter()),
+      ],
+      child: MaterialApp(
+        theme: ThemeData(),
+        home: const WidgetTree(),
+      ),
     );
   }
 }
