@@ -1,4 +1,5 @@
 import 'package:blood_donation/Auth%20pages/WidgetTree.dart';
+import 'package:blood_donation/lists/states%20and%20cities.dart';
 import 'package:blood_donation/providers/requstCountProviders.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_)=>Counter()),
+        ChangeNotifierProvider(create: (a)=>dropdowns()),
       ],
       child: MaterialApp(
         theme: ThemeData(),

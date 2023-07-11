@@ -28,11 +28,25 @@ class dbms {
 
   Future createRequest({
     required String req_blood_group,
-    required int req_units,
+    required String req_units,
     required String state,
     required String city,
-}) {
-    // TODO: implement createRequest
-    throw UnimplementedError();
+}) async {
+    final application= _db.collection("Requests").doc();
+    final json2={
+      "Blood Group": req_blood_group,
+      "Units": req_units,
+      "State": state,
+      "City":city,
+    };
+    try{
+      await application.set(json2).whenComplete(() => SnackBar(content: Text("Request created")));
+    }catch(e){
+      return SnackBar(content: Text("Some error occured"));
+    }
+  }
+
+  getRequests(){
+    return const Text("data");
   }
 }

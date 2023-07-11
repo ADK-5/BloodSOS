@@ -40,6 +40,8 @@ dependencies:
   date_time_picker: ^2.1.0
   cloud_firestore: ^4.8.2
   provider: ^6.0.5
+  dio: ^5.2.1+1
+  csc_picker: ^0.2.7
 
 dev_dependencies:
   flutter_test:
