@@ -1,9 +1,9 @@
+// ignore_for_file: file_names, non_constant_identifier_names
+
 import 'package:blood_donation/auth.dart';
 import 'package:blood_donation/commons/fieldStyle.dart';
 import 'package:blood_donation/dtbase.dart';
-import 'package:blood_donation/screens/requestPage.dart';
 import 'package:date_time_picker/date_time_picker.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class SignupPage extends StatefulWidget {
@@ -146,7 +146,7 @@ class _SignupPageState extends State<SignupPage> {
                           email: _controllerEmail.text,
                           password: _controllerPassword.text);
                       var value = Auth().currentUser!.uid;
-                      await dbms().createUser(
+                      await DB().createUser(
                           documentID: value,
                           name: _controllerName.text.trim(),
                           phoneNo: _controllerPhNo.text.trim(),

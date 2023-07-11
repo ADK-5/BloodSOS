@@ -1,4 +1,6 @@
+
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 
 class Auth{
   final FirebaseAuth _firebaseAuth=FirebaseAuth.instance;
@@ -17,7 +19,9 @@ class Auth{
       await _firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
     }
   }
 
@@ -29,7 +33,9 @@ class Auth{
       try{
         userdata=await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
       }catch(e) {
-        print(e);
+        if (kDebugMode) {
+          print(e);
+        }
       }
   }
 

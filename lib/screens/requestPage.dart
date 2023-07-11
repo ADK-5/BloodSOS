@@ -1,17 +1,15 @@
-import 'dart:convert';
-import 'dart:ffi';
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:blood_donation/commons/fieldStyle.dart';
 import 'package:blood_donation/dtbase.dart';
-import 'package:blood_donation/lists/states%20and%20cities.dart';
 import 'package:blood_donation/providers/requstCountProviders.dart';
 import 'package:csc_picker/csc_picker.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class RequestForm extends StatefulWidget {
-  RequestForm({Key? key}) : super(key: key);
+  const RequestForm({Key? key}) : super(key: key);
 
   @override
   State<RequestForm> createState() => _RequestFormState();
@@ -51,8 +49,10 @@ class _RequestFormState extends State<RequestForm>
                   width: 180,
                   child: DropdownButtonFormField(
                       validator: (bg) {
-                        if (bg == null || bg.isEmpty)
+                        if (bg == null || bg.isEmpty) {
                           return "Select Required Blood Group";
+                        }
+                        return null;
                       },
                       decoration: TextFormFieldStyle.copyWith(
                         labelText: "Blood Group",
@@ -73,7 +73,7 @@ class _RequestFormState extends State<RequestForm>
                 ),
                 GestureDetector(
                     onTap: () => context.read<Counter>().decrement(),
-                    child: const Circularbutton(
+                    child: const CircularButton(
                       icon: CupertinoIcons.minus,
                     )),
                 Container(
@@ -84,13 +84,13 @@ class _RequestFormState extends State<RequestForm>
                       borderRadius: BorderRadius.circular(5)),
                   child: Center(
                       child: Text(
-                    "${_controllerRequestUnit = context.watch<Counter>().unit.toString()}",
-                    style: TextStyle(fontSize: 30),
+                    _controllerRequestUnit = context.watch<Counter>().unit.toString(),
+                    style: const TextStyle(fontSize: 30),
                   )),
                 ),
                 GestureDetector(
                   onTap: () => context.read<Counter>().increment(),
-                  child: const Circularbutton(
+                  child: const CircularButton(
                     icon: Icons.add,
                   ),
                 ),
@@ -130,7 +130,7 @@ class _RequestFormState extends State<RequestForm>
                 });
               },
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             ElevatedButton(
@@ -148,12 +148,14 @@ class _RequestFormState extends State<RequestForm>
                         ),
                         TextButton(
                           onPressed: () async {
-                            await dbms().createRequest(
+                            await DB().createRequest(
                                 req_blood_group: _requestedBG,
                                 req_units: _controllerRequestUnit,
                                 state: _controllerRequestState,
                                 city: _controllerRequestCity);
+                            // ignore: use_build_context_synchronously
                             Navigator.pop(context);
+                            // ignore: use_build_context_synchronously
                             Navigator.pop(context);
                           },
                           child: const Text('OK'),
@@ -163,7 +165,7 @@ class _RequestFormState extends State<RequestForm>
                   );
                 },
                 style: ButtonStyle(
-                    backgroundColor: MaterialStatePropertyAll(Colors.red),
+                    backgroundColor: const MaterialStatePropertyAll(Colors.red),
                     shape: MaterialStatePropertyAll(RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30)))),
                 child: const Text("Submit Request"))
@@ -172,8 +174,8 @@ class _RequestFormState extends State<RequestForm>
   }
 }
 
-class Circularbutton extends StatelessWidget {
-  const Circularbutton({
+class CircularButton extends StatelessWidget {
+  const CircularButton({
     Key? key,
     required this.icon,
   }) : super(key: key);

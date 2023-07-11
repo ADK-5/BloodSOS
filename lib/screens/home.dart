@@ -4,12 +4,7 @@ import 'package:blood_donation/screens/requestPage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../lists/states and cities.dart';
-// import 'package:date_time_picker/date_time_picker.dart';
-// import 'package:blood_donation/dtbase.dart';
-// import 'package:provider/provider.dart';
-// import '../lists/states and cities.dart';
-// import 'package:csc_picker/csc_picker.dart';
+import '../dtbase.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -25,20 +20,22 @@ class _MyHomePageState extends State<MyHomePage> {
         builder: (context) {
           return Container(
             height: 350,
-            padding: EdgeInsets.all(10),
-            child: RequestForm(),
+            padding: const EdgeInsets.all(10),
+            child: const RequestForm(),
           );
         });
   }
 
-  // @override
-  // void initState() {
-  //   context.read<dropdowns>().getStates();
-  //   super.initState();
-  // }
+  @override
+  void initState() {
+    context.read<Database>().getRequests();
+    super.initState();
+  }
+  List displayRequests=[];
 
   @override
   Widget build(BuildContext context) {
+    displayRequests=context.watch<Database>().allRequests;
     return Scaffold(
       appBar: AppBar(
         title: const Text("Home Page"),
@@ -52,12 +49,21 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Center(
         child: ListView.builder(
-            itemCount: 10,
+            itemCount: displayRequests.length,
             itemBuilder: (context,index){
-          return ListTile(
-            title: Text("This is the title"),
-            leading: Icon(Icons.water_drop,color: Colors.red,),
-            subtitle: Text("data"),
+          return Container(
+            decoration: BoxDecoration(color: Colors.greenAccent,border: Border.all(color: Colors.black,width: 1),),
+            child: ListTile(
+              title: Text("${displayRequests[index]['City']},${displayRequests[index]['State']}"),
+              leading: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("${displayRequests[index]['Blood Group']}"),
+                  Text("${displayRequests[index]['Units']} units")
+                ],
+              ),
+              subtitle: const Text("data"),
+            ),
           );
         }),
       ),
@@ -77,7 +83,8 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: const BottomAppBar(color: Colors.red,height: 50,notchMargin: 50,elevation: 10,),
     );
   }
 }

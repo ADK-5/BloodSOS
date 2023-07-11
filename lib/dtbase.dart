@@ -1,11 +1,14 @@
+// ignore_for_file: non_constant_identifier_names
+
+import 'package:blood_donation/auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-class dbms {
+class DB {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
   Future createUser({
-    //String collectionPath="Profiles",
     required String documentID,
     required String name,
     required String phoneNo,
@@ -31,22 +34,68 @@ class dbms {
     required String req_units,
     required String state,
     required String city,
-}) async {
-    final application= _db.collection("Requests").doc();
-    final json2={
+    bool IsResolved = false,
+  }) async {
+    final application = _db.collection("Requests").doc();
+    final json2 = {
       "Blood Group": req_blood_group,
       "Units": req_units,
       "State": state,
-      "City":city,
+      "City": city,
+      "Resolved": IsResolved,
+      "Requested On": DateTime.now(),
+      "Resolved On": "",
+      "Request uid": Auth().currentUser?.uid,
     };
-    try{
-      await application.set(json2).whenComplete(() => SnackBar(content: Text("Request created")));
-    }catch(e){
-      return SnackBar(content: Text("Some error occured"));
+    try {
+      await application
+          .set(json2)
+          .whenComplete(() => const SnackBar(content: Text("Request created")));
+    } catch (e) {
+      return const SnackBar(content: Text("Some error occured"));
     }
   }
 
-  getRequests(){
-    return const Text("data");
+  //List allRequests = [];
+
+  // getRequests() {
+  //   _db
+  //       .collection("Requests")
+  //       //.where("IsResolved", isEqualTo: null) //conditional fetch
+  //       .get()
+  //       .then((QuerySnapshot) {
+  //     print("completed getting requests");
+  //     for(var docsnap in QuerySnapshot.docs){
+  //       print("${docsnap.id}=> ${docsnap.data()['State']}");
+  //       allRequests.add(docsnap.data());
+  //     }
+  //     print(allRequests);
+  //   });
+  //   return const Text("data");
+  // }
+}
+
+class Database with ChangeNotifier{
+  List allRequests=[];
+  getRequests() {
+    DB()._db
+        .collection("Requests")
+    //.where("IsResolved", isEqualTo: null) //conditional fetch
+        .get()
+        .then((querySnapshot) {
+      if (kDebugMode) {
+        print("completed getting requests");
+      }
+      for(var docsnap in querySnapshot.docs){
+        if (kDebugMode) {
+          print("${docsnap.id}=> ${docsnap.data()['State']}");
+        }
+        allRequests.add(docsnap.data());
+      }
+      if (kDebugMode) {
+        print(allRequests);
+      }
+    });
   }
+
 }

@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:blood_donation/Auth%20pages/SignIn.dart';
 import 'package:blood_donation/Auth%20pages/SignUp.dart';
 import 'package:blood_donation/auth.dart';
@@ -21,16 +23,21 @@ class _WidgetTreeState extends State<WidgetTree> {
         builder: (context, snapshot) {
           Auth().authStateChanges.listen((User? user) {
             if (user == null) {
-              print("No user");
+              if (kDebugMode) {
+                print("No user");
+              }
             }
               else {
-              print("User ${user.uid} is signed In");
+              if (kDebugMode) {
+                print("User ${user.uid} is signed In");
+              }
             }
           });
-          if (snapshot.hasData)
-            return MyHomePage();
-          else
-            return AuthServices();
+          if (snapshot.hasData) {
+            return const MyHomePage();
+          } else {
+            return const AuthServices();
+          }
         });
   }
 }

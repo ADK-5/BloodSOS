@@ -3,7 +3,6 @@ import 'package:blood_donation/auth.dart';
 import 'package:blood_donation/screens/home.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class HomeorReg extends StatefulWidget {
   const HomeorReg({Key? key}) : super(key: key);

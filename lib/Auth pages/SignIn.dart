@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:blood_donation/auth.dart';
 import 'package:blood_donation/commons/fieldStyle.dart';
 import 'package:flutter/material.dart';
@@ -17,9 +19,9 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Sign In")),
+      appBar: AppBar(title: const Text("Sign In")),
       body: Container(
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         alignment: Alignment.center,
         child: Column(
           children: [
@@ -27,7 +29,7 @@ class _LoginPageState extends State<LoginPage> {
               controller: _controllerEmail,
               decoration: TextFormFieldStyle.copyWith(labelText: "Email"),
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             TextFormField(
@@ -42,8 +44,8 @@ class _LoginPageState extends State<LoginPage> {
                       email: _controllerEmail.text,
                       password: _controlllerPassword.text);
                 },
-                child: Text("Sign In")),
-            ElevatedButton(onPressed: widget.onSignup, child: Text("Sign Up Instead")),
+                child: const Text("Sign In")),
+            ElevatedButton(onPressed: widget.onSignup, child: const Text("Sign Up Instead")),
           ],
         ),
       ),
