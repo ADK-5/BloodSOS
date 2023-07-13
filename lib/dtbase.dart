@@ -56,23 +56,6 @@ class DB {
     }
   }
 
-  //List allRequests = [];
-
-  // getRequests() {
-  //   _db
-  //       .collection("Requests")
-  //       //.where("IsResolved", isEqualTo: null) //conditional fetch
-  //       .get()
-  //       .then((QuerySnapshot) {
-  //     print("completed getting requests");
-  //     for(var docsnap in QuerySnapshot.docs){
-  //       print("${docsnap.id}=> ${docsnap.data()['State']}");
-  //       allRequests.add(docsnap.data());
-  //     }
-  //     print(allRequests);
-  //   });
-  //   return const Text("data");
-  // }
 }
 
 class Database with ChangeNotifier{
@@ -83,18 +66,18 @@ class Database with ChangeNotifier{
     //.where("IsResolved", isEqualTo: null) //conditional fetch
         .get()
         .then((querySnapshot) {
-      if (kDebugMode) {
-        print("completed getting requests");
-      }
+      // if (kDebugMode) {
+      //   print("completed getting requests");
+      // }
       for(var docsnap in querySnapshot.docs){
-        if (kDebugMode) {
-          print("${docsnap.id}=> ${docsnap.data()['State']}");
-        }
+        // if (kDebugMode) {
+        //   print("${docsnap.id}=> ${docsnap.data()['State']}");
+        // }
         allRequests.add(docsnap.data());
       }
-      if (kDebugMode) {
-        print(allRequests);
-      }
+      // if (kDebugMode) {
+      //   print(allRequests);
+      // }
     });
   }
 

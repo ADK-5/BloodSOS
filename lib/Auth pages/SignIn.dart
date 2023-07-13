@@ -45,6 +45,10 @@ class _LoginPageState extends State<LoginPage> {
                       password: _controlllerPassword.text);
                 },
                 child: const Text("Sign In")),
+            
+            ElevatedButton(onPressed: (){
+              Auth().signInWithGoogle();
+            }, child: Text("Sign in with Google")),
             ElevatedButton(onPressed: widget.onSignup, child: const Text("Sign Up Instead")),
           ],
         ),
