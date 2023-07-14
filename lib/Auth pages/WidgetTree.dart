@@ -2,7 +2,9 @@
 
 import 'package:blood_donation/Auth%20pages/SignIn.dart';
 import 'package:blood_donation/Auth%20pages/SignUp.dart';
+import 'package:blood_donation/Auth%20pages/registrationPage.dart';
 import 'package:blood_donation/auth.dart';
+import 'package:blood_donation/dtbase.dart';
 import 'package:blood_donation/screens/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
@@ -34,7 +36,7 @@ class _WidgetTreeState extends State<WidgetTree> {
             }
           });
           if (snapshot.hasData) {
-            return const MyHomePage();
+            return MyHomePage();
           } else {
             return const AuthServices();
           }

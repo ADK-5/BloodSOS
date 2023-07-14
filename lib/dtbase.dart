@@ -56,29 +56,19 @@ class DB {
     }
   }
 
-}
-
-class Database with ChangeNotifier{
-  List allRequests=[];
-  getRequests() {
-    DB()._db
-        .collection("Requests")
-    //.where("IsResolved", isEqualTo: null) //conditional fetch
-        .get()
-        .then((querySnapshot) {
-      // if (kDebugMode) {
-      //   print("completed getting requests");
-      // }
-      for(var docsnap in querySnapshot.docs){
-        // if (kDebugMode) {
-        //   print("${docsnap.id}=> ${docsnap.data()['State']}");
-        // }
-        allRequests.add(docsnap.data());
-      }
-      // if (kDebugMode) {
-      //   print(allRequests);
-      // }
-    });
+  Future
+  <bool>
+  isNewUser() async {
+    var id=Auth().currentUser?.uid;
+    final allProfiles= await _db.collection("Profiles").get();
+    for (var users in allProfiles.docs){
+      // print("id: $id");
+      // print(users.id);
+      if(id==users)return false;
+    }
+    return true;
   }
+
+
 
 }

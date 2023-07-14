@@ -2,7 +2,9 @@
 
 import 'package:blood_donation/auth.dart';
 import 'package:blood_donation/commons/fieldStyle.dart';
+import 'package:blood_donation/screens/home.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginPage extends StatefulWidget {
   final VoidCallback onSignup;
@@ -45,11 +47,14 @@ class _LoginPageState extends State<LoginPage> {
                       password: _controlllerPassword.text);
                 },
                 child: const Text("Sign In")),
-            
-            ElevatedButton(onPressed: (){
-              Auth().signInWithGoogle();
-            }, child: Text("Sign in with Google")),
-            ElevatedButton(onPressed: widget.onSignup, child: const Text("Sign Up Instead")),
+            ElevatedButton(
+                onPressed: () {
+                  Auth().signInWithGoogle();
+                },
+                child: Text("Sign in with Google")),
+            ElevatedButton(
+                onPressed: widget.onSignup,
+                child: const Text("Sign Up Instead")),
           ],
         ),
       ),

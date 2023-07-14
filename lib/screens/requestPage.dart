@@ -135,7 +135,8 @@ class _RequestFormState extends State<RequestForm>
             ),
             ElevatedButton(
                 onPressed: () {
-                  showDialog<String>(
+                  if(_requestFormKey.currentState!.validate()) {
+                    showDialog<String>(
                     context: context,
                     builder: (BuildContext context) => AlertDialog(
                       title: const Text('Confirm Request'),
@@ -163,6 +164,7 @@ class _RequestFormState extends State<RequestForm>
                       ],
                     ),
                   );
+                  }
                 },
                 style: ButtonStyle(
                     backgroundColor: const MaterialStatePropertyAll(Colors.red),
