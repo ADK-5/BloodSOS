@@ -10,7 +10,6 @@ class DB {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
   Future createUser({
-    required String documentID,
     required String name,
     required String phoneNo,
     required String dateOfBirth,
@@ -18,22 +17,24 @@ class DB {
     required String state,
     required String blood_group,
   }) async {
-    final docUser = _db.collection("Profiles").doc(documentID);
+    final docUser = _db.collection("Profiles").doc(Auth().currentUser?.uid);
     final json = {
       'name': name,
       'dateOfBirth': dateOfBirth,
       'Phone No.': phoneNo,
-      'City': city,
-      'State': state,
+      // 'City': city,
+      // 'State': state,
       'Blood Group': blood_group,
-      'DeviceId': FirebaseMessaging.instance.getToken(),
+      // 'DeviceId': FirebaseMessaging.instance.getToken(),
     };
     try {
-      await docUser.set(json).whenComplete(() {
-        const SnackBar(content: Text("Created user in db"),backgroundColor: Colors.pink,);
-      });
+      await docUser.set(json);
+    //       .whenComplete(() {
+    //     const SnackBar(content: Text("Created user in db"),backgroundColor: Colors.pink,);
+    //   });
     } catch (e) {
-      const SnackBar(content: Text("error"));
+      // const SnackBar(content: Text("error"));
+      print("error");
     }
   }
 

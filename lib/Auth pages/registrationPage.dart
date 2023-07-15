@@ -51,13 +51,13 @@ class _RegisterUserState extends State<RegisterUser> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Registration Page"),
+        title: const Text("Registration Page"),
         actions: [
           IconButton(
               onPressed: () {
                 Auth().signOut();
               },
-              icon: Icon(Icons.power_settings_new))
+              icon: const Icon(Icons.power_settings_new))
         ],
       ),
       body: Form(
@@ -88,7 +88,7 @@ class _RegisterUserState extends State<RegisterUser> {
                       value.isEmpty ||
                       !value.contains('@') ||
                       !value.contains('.')) {
-                    return "Please enter a  valid email";
+                    return "Please enter a valid email";
                   }
                   return null;
                 },
@@ -143,33 +143,38 @@ class _RegisterUserState extends State<RegisterUser> {
               const SizedBox(
                 height: 15,
               ),
-              TextFormField(
-                controller: _controllercity,
-              ),
-              const SizedBox(
-                height: 15,
-              ),
+              // TextFormField(
+              //   controller: _controllercity,
+              // ),
+              // const SizedBox(
+              //   height: 15,
+              // ),
               ElevatedButton(
                   onPressed: () async {
                     if (_formkey.currentState!.validate()) {
-                      await DB().createUser(
-                        documentID: id!,
-                        name: _controllerName.text.trim(),
-                        phoneNo: _controllerPhNo.text.trim(),
-                        dateOfBirth: _controllerDOB.text.trim(),
-                        city: _controllercity.text.trim(),
-                        state: _controllerstate.text.trim(),
-                        blood_group: BloodGroup,
-                      ).whenComplete(() => context.read<NewUserChecker>().newUserCheck());
-                    }
+                      // print("id: $id");
+                      await DB()
+                          .createUser(
+                            // documentID: id!,
+                            name: _controllerName.text.trim(),
+                            phoneNo: _controllerPhNo.text.trim(),
+                            dateOfBirth: _controllerDOB.text.trim(),
+                            city: _controllercity.text.trim(),
+                            state: _controllerstate.text.trim(),
+                            blood_group: BloodGroup,
+                          )
+                          .whenComplete(() => context
+                              .read<NewUserChecker>()
+                              .toggleUserUniqueness())
+                      ;}
                   },
-                  child: const Text("Sign Up")),
-              ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => RickRolled()));
-                  },
-                  child: const Text("Mujhe Mat Dabao"))
+                  child: const Text("Register")),
+              // ElevatedButton(
+              //     onPressed: () {
+              //       Navigator.push(context,
+              //           MaterialPageRoute(builder: (context) => RickRolled()));
+              //     },
+              //     child: const Text("Mujhe Mat Dabao"))
             ],
           ),
         ),

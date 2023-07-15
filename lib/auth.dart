@@ -1,4 +1,5 @@
 import 'package:blood_donation/dtbase.dart';
+import 'package:blood_donation/providers/newUserCheckProvider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -12,17 +13,15 @@ class Auth {
     return _firebaseAuth.authStateChanges();
   }
 
-  String? returnuid(){
-    return currentUser?.uid;
-  }
-
   Future<void> signInwithEmailandPassword({
     required String email,
     required String password,
   }) async {
+    var userdata;
     try {
-      await _firebaseAuth.signInWithEmailAndPassword(
+      userdata = await _firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
+      print(userdata);
     } catch (e) {
       if (kDebugMode) {
         print(e);
@@ -38,6 +37,7 @@ class Auth {
     try {
       userdata = await _firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);
+      print(userdata);
     } catch (e) {
       if (kDebugMode) {
         print(e);

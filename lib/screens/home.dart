@@ -1,9 +1,11 @@
 import 'package:blood_donation/auth.dart';
 import 'package:blood_donation/dtbase.dart';
 import 'package:blood_donation/fcm.dart';
+import 'package:blood_donation/providers/newUserCheckProvider.dart';
 import 'package:blood_donation/screens/all_requests.dart';
 import 'package:blood_donation/screens/requestPage.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -46,17 +48,12 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       ),
       body: Column(
-        children: [
-          ElevatedButton(
-              onPressed: () async {
-                if (await DB().isNewUser()) {
-                  print("object");
-                } else {
-                  print("not new");
-                }
-              },
-              child: Text("data")),
-          const Expanded(child: AllRequests()),
+        children: const [
+          SizedBox(height: 10,),
+          // ElevatedButton(
+          //     onPressed: () {},
+          //     child: Text("${context.watch<NewUserChecker>().isNew}")),
+          Expanded(child: AllRequests()),
         ],
       ),
       floatingActionButton: SizedBox(

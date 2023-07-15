@@ -20,12 +20,10 @@ class WidgetTree extends StatefulWidget {
 }
 
 class _WidgetTreeState extends State<WidgetTree> {
-
-  @override
-  void initState() {
-    context.read<NewUserChecker>().newUserCheck();
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -38,13 +36,16 @@ class _WidgetTreeState extends State<WidgetTree> {
                 print("No user");
               }
             } else {
+              context.read<NewUserChecker>().newUserCheck(user.uid);
               if (kDebugMode) {
-                print("User ${user.uid} is signed In");
+                //print("User ${user.uid} is signed In");
               }
             }
           });
           if (snapshot.hasData) {
-            return context.watch<NewUserChecker>().isNew ? RegisterUser() : MyHomePage();
+            return context.watch<NewUserChecker>().isNew
+                ? RegisterUser()
+                : MyHomePage();
           } else {
             return const AuthServices();
           }
