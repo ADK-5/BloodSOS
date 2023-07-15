@@ -2,6 +2,7 @@
 
 import 'package:blood_donation/auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -13,19 +14,26 @@ class DB {
     required String name,
     required String phoneNo,
     required String dateOfBirth,
+    required String city,
+    required String state,
+    required String blood_group,
   }) async {
     final docUser = _db.collection("Profiles").doc(documentID);
     final json = {
       'name': name,
       'dateOfBirth': dateOfBirth,
       'Phone No.': phoneNo,
+      'City': city,
+      'State': state,
+      'Blood Group': blood_group,
+      'DeviceId': FirebaseMessaging.instance.getToken(),
     };
     try {
       await docUser.set(json).whenComplete(() {
-        return const SnackBar(content: Text("Created user in db"));
+        const SnackBar(content: Text("Created user in db"),backgroundColor: Colors.pink,);
       });
     } catch (e) {
-      return const SnackBar(content: Text("error"));
+      const SnackBar(content: Text("error"));
     }
   }
 
@@ -56,19 +64,14 @@ class DB {
     }
   }
 
-  Future
-  <bool>
-  isNewUser() async {
-    var id=Auth().currentUser?.uid;
-    final allProfiles= await _db.collection("Profiles").get();
-    for (var users in allProfiles.docs){
+  Future<bool> isNewUser() async {
+    var id = Auth().currentUser?.uid;
+    final allProfiles = await _db.collection("Profiles").get();
+    for (var users in allProfiles.docs) {
       // print("id: $id");
       // print(users.id);
-      if(id==users)return false;
+      if (id == users) return false;
     }
     return true;
   }
-
-
-
 }

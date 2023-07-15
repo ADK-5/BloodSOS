@@ -67,13 +67,13 @@ class Auth {
       exp: 1689345244, iat: 1689341644, iss: https://accounts.google.com, sub: 111200449011335343176,
       name: A D K, email: adkcoc1@gmail.com, email_verified: true}
 */
-      if (additionalUserInfo.isNewUser) {
-        DB().createUser(
-            documentID: additionalUserInfo.providerId!,
-            name: additionalUserInfo.profile!['name'],
-            phoneNo: "phoneNo",
-            dateOfBirth: "dateOfBirth");
-      }
+      // if (additionalUserInfo.isNewUser) {
+      //   DB().createUser(
+      //       documentID: additionalUserInfo.providerId!,
+      //       name: additionalUserInfo.profile!['name'],
+      //       phoneNo: "phoneNo",
+      //       dateOfBirth: "dateOfBirth");
+      // }
       print(additionalUserInfo.profile);
       print("id: ${additionalUserInfo.providerId}");
     } else if (kDebugMode) {

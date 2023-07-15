@@ -1,5 +1,6 @@
 import 'package:blood_donation/Auth%20pages/WidgetTree.dart';
 import 'package:blood_donation/dtbase.dart';
+import 'package:blood_donation/providers/newUserCheckProvider.dart';
 import 'package:blood_donation/providers/requestCountProviders.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -30,6 +31,7 @@ class _MyAppState extends State<MyApp> {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_)=>Counter()),
+        ChangeNotifierProvider(create: (__)=>NewUserChecker()),
       ],
       child: MaterialApp(
         theme: ThemeData(),

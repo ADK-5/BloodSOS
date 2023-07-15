@@ -2,9 +2,7 @@
 
 import 'package:blood_donation/auth.dart';
 import 'package:blood_donation/commons/fieldStyle.dart';
-import 'package:blood_donation/screens/home.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginPage extends StatefulWidget {
   final VoidCallback onSignup;
@@ -24,8 +22,8 @@ class _LoginPageState extends State<LoginPage> {
       appBar: AppBar(title: const Text("Sign In")),
       body: Container(
         padding: const EdgeInsets.all(10),
-        alignment: Alignment.center,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextFormField(
               controller: _controllerEmail,
@@ -39,6 +37,7 @@ class _LoginPageState extends State<LoginPage> {
               decoration: TextFormFieldStyle.copyWith(
                 labelText: "Password",
               ),
+              obscureText: true,
             ),
             ElevatedButton(
                 onPressed: () {

@@ -5,10 +5,12 @@ import 'package:blood_donation/Auth%20pages/SignUp.dart';
 import 'package:blood_donation/Auth%20pages/registrationPage.dart';
 import 'package:blood_donation/auth.dart';
 import 'package:blood_donation/dtbase.dart';
+import 'package:blood_donation/providers/newUserCheckProvider.dart';
 import 'package:blood_donation/screens/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class WidgetTree extends StatefulWidget {
   const WidgetTree({Key? key}) : super(key: key);
@@ -18,6 +20,13 @@ class WidgetTree extends StatefulWidget {
 }
 
 class _WidgetTreeState extends State<WidgetTree> {
+
+  @override
+  void initState() {
+    context.read<NewUserChecker>().newUserCheck();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -28,15 +37,14 @@ class _WidgetTreeState extends State<WidgetTree> {
               if (kDebugMode) {
                 print("No user");
               }
-            }
-              else {
+            } else {
               if (kDebugMode) {
                 print("User ${user.uid} is signed In");
               }
             }
           });
           if (snapshot.hasData) {
-            return MyHomePage();
+            return context.watch<NewUserChecker>().isNew ? RegisterUser() : MyHomePage();
           } else {
             return const AuthServices();
           }
@@ -60,7 +68,9 @@ class _AuthServicesState extends State<AuthServices> {
         ? LoginPage(
             onSignup: toggle,
           )
-        : SignupPage(onLogin: toggle,);
+        : SignupPage(
+            onLogin: toggle,
+          );
   }
 
   void toggle() {
