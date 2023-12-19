@@ -20,10 +20,6 @@ class WidgetTree extends StatefulWidget {
 }
 
 class _WidgetTreeState extends State<WidgetTree> {
-  // @override
-  // void initState() {
-  //   super.initState();
-  // }
 
   @override
   Widget build(BuildContext context) {

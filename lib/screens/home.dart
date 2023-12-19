@@ -1,11 +1,9 @@
 import 'package:blood_donation/auth.dart';
-import 'package:blood_donation/dtbase.dart';
 import 'package:blood_donation/fcm.dart';
-import 'package:blood_donation/providers/newUserCheckProvider.dart';
 import 'package:blood_donation/screens/all_requests.dart';
 import 'package:blood_donation/screens/requestPage.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -14,6 +12,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  late final fcmToken;
   void requestBlood() {
     showModalBottomSheet(
         context: context,
@@ -26,34 +25,36 @@ class _MyHomePageState extends State<MyHomePage> {
         });
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Home Page"),
         actions: [
-          TextButton(
-              onPressed: () {
-                FCM().printToken();
-              },
-              child: const Text(
-                "token",
-                style: TextStyle(color: Colors.white),
-              )),
           IconButton(
               onPressed: () {
                 Auth().signOut();
               },
-              icon: const Icon(Icons.power_settings_new))
+              icon: const Padding(
+                padding: EdgeInsets.only(right: 30),
+                child: Icon(Icons.person,size: 35),
+              ))
         ],
       ),
       body: Column(
-        children: const [
-          SizedBox(height: 10,),
-          // ElevatedButton(
-          //     onPressed: () {},
-          //     child: Text("${context.watch<NewUserChecker>().isNew}")),
-          Expanded(child: AllRequests()),
+        children: [
+          const SizedBox(height: 10,),
+          ElevatedButton(
+              onPressed: () async {
+                var Token=await FirebaseMessaging.instance.getToken();
+                setState(() {
+                  fcmToken=Token;
+                  print(fcmToken);
+                });
+              },
+              child: const Text("kuchh bhi")),
+          const Expanded(child: AllRequests()),
         ],
       ),
       floatingActionButton: SizedBox(
@@ -67,7 +68,8 @@ class _MyHomePageState extends State<MyHomePage> {
             elevation: 5.0,
             child: const Icon(
               Icons.add,
-              color: Colors.red,
+              color: Colors.white,
+              size: 40,
             ),
           ),
         ),

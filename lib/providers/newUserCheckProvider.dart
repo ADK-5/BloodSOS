@@ -17,7 +17,7 @@ class NewUserChecker with ChangeNotifier{
         break;
       }
       if (kDebugMode) {
-        print("user id: ${userdocs.id}");
+        //print("user id: ${userdocs.id}");
       }
     }
     if(check) {

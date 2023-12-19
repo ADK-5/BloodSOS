@@ -17,6 +17,20 @@ class RegisterUser extends StatefulWidget {
 }
 
 class _RegisterUserState extends State<RegisterUser> {
+  void printer(String s)  {
+    print(s);
+ }
+ // late final fcmToken;
+  @override
+  // void initState() async  {
+  //   // TODO: implement initState
+  //   super.initState();
+  //   final Token = await FirebaseMessaging.instance.getToken();
+  //   setState(() {
+  //     fcmToken=Token;
+  //   });
+  //   printer(fcmToken);
+  // }
   final _formkey = GlobalKey<FormState>();
   var id = Auth().currentUser?.uid;
   var phn = Auth().currentUser?.phoneNumber;
@@ -152,6 +166,10 @@ class _RegisterUserState extends State<RegisterUser> {
               ElevatedButton(
                   onPressed: () async {
                     if (_formkey.currentState!.validate()) {
+                      // setState(() async {
+                      //   fcmToken=await FirebaseMessaging.instance.getToken();
+                      //   print(fcmToken);
+                      // });
                       // print("id: $id");
                       await DB()
                           .createUser(
@@ -165,8 +183,8 @@ class _RegisterUserState extends State<RegisterUser> {
                           )
                           .whenComplete(() => context
                               .read<NewUserChecker>()
-                              .toggleUserUniqueness())
-                      ;}
+                              .toggleUserUniqueness());
+                    }
                   },
                   child: const Text("Register")),
               // ElevatedButton(

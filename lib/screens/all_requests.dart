@@ -17,7 +17,8 @@ class _AllRequestsState extends State<AllRequests> {
     return Scaffold(
       body: StreamBuilder<QuerySnapshot>(
           stream: _RequestStream,
-          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          builder:
+              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (snapshot.hasError) {
               return const Text('Something went wrong');
             }
@@ -30,11 +31,15 @@ class _AllRequestsState extends State<AllRequests> {
                     .map((DocumentSnapshot document) {
                       Map<String, dynamic> data =
                           document.data()! as Map<String, dynamic>;
-                      print(data);
+                      //print(data);
 
                       // List tile can be customised here
                       return ListTile(
+                        shape: const Border(bottom: BorderSide(color:Colors.grey,width: 2)),
                         title: Text("${data['City']},${data['State']}"),
+                        subtitle: data['Phone No'] != null
+                            ? Text('${data['Phone No']}')
+                            : const Text("No contact available"),
                         leading: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
